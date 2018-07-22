@@ -1,25 +1,16 @@
+body {
+  background: #9d0fae;
+}
+
 .App {
   text-align: center;
+  background: #9d0fae;
+  border-radius: 50%;
 }
 
 .App-logo {
   animation: App-logo-spin infinite 20s linear;
   height: 80px;
-}
-
-.App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
-  color: white;
-}
-
-.App-title {
-  font-size: 1.5em;
-}
-
-.App-intro {
-  font-size: large;
 }
 
 @keyframes App-logo-spin {
@@ -42,4 +33,47 @@
 .actions {
   display: flex;
   justify-content: space-around;
+  margin-top: 22px;
+}
+
+.timer {
+  font-size: 60px;
+  background: #760b82a8;
+  border-radius: 50%;
+  width: fit-content;
+  height: fit-content;
+  padding: 40px;
+  border: solid 8px #bb4ac7;
+  margin: auto;
+  color: #e69417;
+  text-shadow: 0 0 10px black;
+  box-shadow: inset 0 0 20px 3px black;
+}
+
+/* .actions>button {
+  background-color: #760b82a8;
+  font-size: larger;
+  color: white;
+  border-radius: 10px;
+  border-color: darkgoldenrod;
+  cursor: pointer;
+} */
+
+.chooseTime,
+.actions>button {
+  background: unset;
+  text-shadow: 0 0 10px black;
+  font-weight: bolder;
+  color: white;
+  border-color: white;
+  border-radius: 13px;
+  cursor: pointer;
+}
+
+.chooseTime {
+  font-size: 42px;
+}
+
+.actions>button {
+  font-size: 25px;
 }

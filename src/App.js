@@ -4,6 +4,8 @@ import './App.css';
 // Using props.children we can pass child elements to the component instance  for rendering.
 const Border = (props) => <div className={'FancyBorder'}>{props.children} </div>
 
+const ChooseTimer = (props) =>
+  <button className="chooseTime" onClick={props.selectTimer} value={props.time}>{props.time}</button>
 
 class Clock extends Component {
   constructor(props) {
@@ -63,17 +65,17 @@ class Clock extends Component {
   render() {
     return (
       <React.Fragment>
-        <Border>
-          {/* <h2>It is {this.state.date.toLocaleTimeString()}    now</h2> */}
-          <h2> Timer Break</h2>
-        </Border>
-        <p>Choose time:</p>
-        <button onClick={this.selectTimer} value="25">25</button>
-        <button onClick={this.selectTimer} value="20">20</button>
-        <button onClick={this.selectTimer} value="15">15</button>
-        <button onClick={this.selectTimer} value="10">10</button>
-        <button onClick={this.selectTimer} value="5">5</button>
-        <button onClick={this.selectTimer} value="1">1</button>
+        {/* <Border> */}
+        {/* <h2>It is {this.state.date.toLocaleTimeString()}    now</h2> */}
+        {/* <h2> Timer Break</h2> */}
+        {/* </Border> */}
+        <h1>Choose time:</h1>
+        <ChooseTimer time={25} selectTimer={this.selectTimer} />
+        <ChooseTimer time={20} selectTimer={this.selectTimer} />
+        <ChooseTimer time={15} selectTimer={this.selectTimer} />
+        <ChooseTimer time={10} selectTimer={this.selectTimer} />
+        <ChooseTimer time={5} selectTimer={this.selectTimer} />
+        <ChooseTimer time={1} selectTimer={this.selectTimer} />
         <hr />
         <h2 className="timer">
           {

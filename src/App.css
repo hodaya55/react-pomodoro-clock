@@ -1,6 +1,9 @@
 body {
   background: #9d0fae;
+  /* background: #181519eb; */
 }
+
+/* background: #ab0423; */
 
 .App {
   text-align: center;
@@ -40,8 +43,9 @@ body {
   font-size: 60px;
   background: #760b82a8;
   border-radius: 50%;
-  width: fit-content;
-  height: fit-content;
+  width: 150px;
+  height: 150px;
+  line-height: 150px;
   padding: 40px;
   border: solid 8px #bb4ac7;
   margin: auto;

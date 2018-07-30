@@ -43,6 +43,14 @@ class Clock extends Component {
         return { counterTimer: count, showTimer: showTimer, play: true };
       });
     }
+    // !check that
+    else if (this.state.isSelect){
+      clearInterval(this.countDown);
+      this.setState(() => {
+        return;
+      });
+    }
+
     else { // timer is over
       clearInterval(this.countDown);
       this.audio.pause();

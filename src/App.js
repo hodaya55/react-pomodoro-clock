@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
+import sound from './intro.mp3'
 
 // Using props.children we can pass child elements to the component instance  for rendering.
 const Border = (props) => <div className={'FancyBorder'}>{props.children} </div>
@@ -10,30 +11,41 @@ const ChooseTimer = (props) =>
 class Clock extends Component {
   constructor(props) {
     super(props);
-    this.state = { date: new Date(), counterTimer: 0, showTimer: '00:00', isStart: false, isSelect: false, isStop: false, isReset: false };
+    this.state = {
+      date: new Date(), counterTimer: 0, showTimer: '00:00', isStart: false,
+      isSelect: false, isStop: false, isReset: false, play: false
+    };
+    this.audio = new Audio(sound);
   }
   // this function will be invoked a setInterval function immediately after the view is ready and rendered.
   componentDidMount() {
     this.timerID = setInterval(() => this.tick(), 1000);
+  }
+  togglePlay = () => {
+    // this.setState({ play: !this.state.play });
+    console.log(this.audio);
+    this.state.play ? this.audio.play() : this.audio.pause();
   }
   tick() {
     this.setState({ date: new Date() });
   }
   down() {
     let count = this.state.counterTimer;
-    if (count > 0) {
+    if (this.state.isStart && count > 0) {
+      this.audio.play();
       count--;
       let m = Math.floor(count / 60);
       let s = count % 60;
       let showTimer = `${m < 10 ? ('0' + m) : m}:${s < 10 ? ('0' + s) : s}`;
       this.setState(() => {
-        return { counterTimer: count, showTimer: showTimer };
+        return { counterTimer: count, showTimer: showTimer, play: true };
       });
     }
     else { // timer is over
       clearInterval(this.countDown);
+      this.audio.pause();
       this.setState(() => {
-        return { isSelect: false, isStart: false };
+        return { isSelect: false, isStart: false, play: false };
       });
     }
 
@@ -46,7 +58,15 @@ class Clock extends Component {
   selectTimer = (e) => {
     let { value } = e.target;
     let showTimer = `${value < 10 ? ('0' + value) : value}:00`;
-    this.setState({ counterTimer: e.target.value * 60, showTimer: showTimer, isSelect: true });
+    if (this.state.isStart && this.state.isSelect) {
+      this.setState({ counterTimer: e.target.value * 60, showTimer: showTimer, isStart: false });
+      this.audio.pause();
+    }
+    else if (!this.state.isStart) {
+      this.setState({ counterTimer: e.target.value * 60, showTimer: showTimer, isSelect: true });
+      this.audio.pause();
+    }
+
   }
   startTimer = () => {
     // disable the button after start timer
@@ -56,11 +76,16 @@ class Clock extends Component {
   }
   stopTimer = () => {
     clearInterval(this.countDown);
-    this.setState({ isStop: true, isStart: false });
+    this.audio.pause();
+
+    this.setState({ isStop: true, isStart: false, play: false });
   }
   resetTimer = () => {
     clearInterval(this.countDown);
-    this.setState({ showTimer: '00:00', isSelect: false, isStart: false, counterTimer: 0 });
+    this.audio.pause();
+    this.audio = new Audio(sound);
+
+    this.setState({ showTimer: '00:00', isSelect: false, isStart: false, counterTimer: 0, play: false });
   }
   render() {
     return (
@@ -79,7 +104,7 @@ class Clock extends Component {
         <hr />
         <h2 className="timer">
           {
-            (this.state.isStart && this.state.isSelect) ? this.state.showTimer : this.state.isSelect ? this.state.showTimer : '00:00'
+            this.state.showTimer
           }
         </h2>
         <div className="actions">

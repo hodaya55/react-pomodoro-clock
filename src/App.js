@@ -20,6 +20,7 @@ class Clock extends Component {
   // this function will be invoked a setInterval function immediately after the view is ready and rendered.
   componentDidMount() {
     this.timerID = setInterval(() => this.tick(), 1000);
+    // this.loopAudio();
   }
   togglePlay = () => {
     // this.setState({ play: !this.state.play });
@@ -33,6 +34,7 @@ class Clock extends Component {
     let count = this.state.counterTimer;
     if (this.state.isStart && count > 0) {
       this.audio.play();
+
       count--;
       let m = Math.floor(count / 60);
       let s = count % 60;
@@ -50,6 +52,14 @@ class Clock extends Component {
     }
 
   }
+
+  loopAudio = () => {
+    this.audio.addEventListener('ended', () => {
+      this.currentTime = 0;
+      this.play();
+    }, false);
+  }
+
   //shut down the clock process when the instance of Clock instance is removed.
   componentWillUnmount() {
     clearInterval(this.timerID);
@@ -61,6 +71,7 @@ class Clock extends Component {
     if (this.state.isStart && this.state.isSelect) {
       this.setState({ counterTimer: e.target.value * 60, showTimer: showTimer, isStart: false });
       this.audio.pause();
+      this.audio = new Audio(sound);
     }
     else if (!this.state.isStart) {
       this.setState({ counterTimer: e.target.value * 60, showTimer: showTimer, isSelect: true });

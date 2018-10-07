@@ -90,6 +90,7 @@ class Clock extends Component {
   selectTimer = (e) => {
     console.log(e.target.id);
 
+    // eslint-disable-next-line
     this.setState({ indexTimer: parseInt(e.target.id), isReset: false, isStop: false });
 
     let { value } = e.target;
@@ -102,6 +103,7 @@ class Clock extends Component {
     else if (!this.state.isStart) {
       this.setState({ counterTimer: e.target.value * 60, showTimer: showTimer, isSelect: true });
       this.audio.pause();
+      this.audio = new Audio(sound);
     }
 
   }

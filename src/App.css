@@ -76,6 +76,18 @@ body {
   background: #e69417;
 } */
 
+.chooseTime.active {
+  background: #e69417;
+}
+
+.actions>button.active {
+  background: #e69417;
+}
+
+.chooseTime:hover {
+  background: #e69417;
+}
+
 .choose {
   color: #e6a217;
   text-shadow: 0 0 4px #000000e6;

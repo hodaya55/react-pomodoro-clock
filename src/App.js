@@ -116,7 +116,7 @@ class Clock extends Component {
   stopTimer = () => {
     clearInterval(this.countDown);
     this.audio.pause();
-    this.setState({ isStop: true, isStart: false, play: false, isReset: false });
+    this.setState({ isStop: true, isStart: false, play: false, });
   }
 
   resetTimer = () => {
@@ -151,7 +151,7 @@ class Clock extends Component {
           <button onClick={this.resetTimer} >Reset •</button> */}
           <button className={this.state.isStart && this.state.isSelect ? 'active' : ''}
             disabled={this.state.isStart} onClick={this.startTimer} >Start >></button>
-          <button className={this.state.isStop ? 'active' : ''} onClick={this.stopTimer} >Pause ||</button>
+          <button className={this.state.isStop && !this.state.isReset && this.state.isSelect ? 'active' : ''} onClick={this.stopTimer} >Pause ||</button>
           <button className={this.state.isReset ? 'active' : ''} onClick={this.resetTimer} >Reset •</button>
         </div>
       </React.Fragment>

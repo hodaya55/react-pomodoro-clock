@@ -44,16 +44,18 @@ class Clock extends Component {
       });
     }
     // !check that
-    else if (this.state.isSelect){
+    else if (this.state.isSelect) {
       clearInterval(this.countDown);
       this.setState(() => {
         return;
       });
     }
 
-    else { // timer is over
+    // else
+    if (count === 0) { // timer is over
       clearInterval(this.countDown);
       this.audio.pause();
+      this.audio = new Audio(sound);
       this.setState(() => {
         return { isSelect: false, isStart: false, play: false };
       });
@@ -91,6 +93,7 @@ class Clock extends Component {
     // disable the button after start timer
     // this.isStart = true;
     this.setState({ isStart: true });
+    this.audio.play();
     this.countDown = setInterval(() => this.down(), 1000);
   }
   stopTimer = () => {
@@ -128,7 +131,7 @@ class Clock extends Component {
         </h2>
         <div className="actions">
           <button disabled={this.state.isStart} onClick={this.startTimer} >Start >></button>
-          <button onClick={this.stopTimer} >Stop ||</button>
+          <button onClick={this.stopTimer} >Pause ||</button>
           <button onClick={this.resetTimer} >Reset •</button>
         </div>
       </React.Fragment>

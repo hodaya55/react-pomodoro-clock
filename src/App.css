@@ -11,20 +11,6 @@ body {
   border-radius: 50%;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
 .FancyBorder {
   border: solid 3px blue;
   width: fit-content;
@@ -35,7 +21,7 @@ body {
 
 .actions {
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
   margin-top: 22px;
 }
 
@@ -76,8 +62,16 @@ body {
 
 .chooseTime {
   font-size: 42px;
+  /* padding: 1px; */
+  margin: 6px;
 }
 
 .actions>button {
   font-size: 25px;
+  padding: 9px;
+  margin: 6px;
+}
+
+.actions>button:active {
+  background: #e69417;
 }

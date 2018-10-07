@@ -72,6 +72,13 @@ body {
   margin: 6px;
 }
 
-.actions>button:active {
+/* .actions>button:active {
   background: #e69417;
+} */
+
+.choose {
+  color: #e6a217;
+  text-shadow: 0 0 4px #000000e6;
+  letter-spacing: 2px;
+  font-size: 50px;
 }

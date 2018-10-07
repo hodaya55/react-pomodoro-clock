@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import './App.css';
 import sound from './intro.mp3'
+import endSound from './endClock.mp3'
 
 // Using props.children we can pass child elements to the component instance  for rendering.
-const Border = (props) => <div className={'FancyBorder'}>{props.children} </div>
+// const Border = (props) => <div className={'FancyBorder'}>{props.children} </div>
 
 const ChooseTimer = (props) =>
   <button className="chooseTime" onClick={props.selectTimer} value={props.time}>{props.time}</button>
@@ -16,25 +17,29 @@ class Clock extends Component {
       isSelect: false, isStop: false, isReset: false, play: false
     };
     this.audio = new Audio(sound);
+    this.endAudio = new Audio(endSound);
+
   }
   // this function will be invoked a setInterval function immediately after the view is ready and rendered.
   componentDidMount() {
     this.timerID = setInterval(() => this.tick(), 1000);
     // this.loopAudio();
   }
-  togglePlay = () => {
+
+  togglePlay = () => { //not used
     // this.setState({ play: !this.state.play });
     console.log(this.audio);
     this.state.play ? this.audio.play() : this.audio.pause();
   }
+
   tick() {
     this.setState({ date: new Date() });
   }
+
   down() {
     let count = this.state.counterTimer;
     if (this.state.isStart && count > 0) {
-      this.audio.play();
-
+      this.audio.play(); // in order to loop the audio after song finish
       count--;
       let m = Math.floor(count / 60);
       let s = count % 60;
@@ -54,16 +59,21 @@ class Clock extends Component {
     // else
     if (count === 0) { // timer is over
       clearInterval(this.countDown);
+
       this.audio.pause();
       this.audio = new Audio(sound);
+
+      this.endAudio = new Audio(endSound);
+      this.endAudio.play();
+
       this.setState(() => {
-        return { isSelect: false, isStart: false, play: false };
+        return { isSelect: false, isStart: false, isStop: false, isReset: false, play: false, };
       });
     }
 
   }
 
-  loopAudio = () => {
+  loopAudio = () => {//not used
     this.audio.addEventListener('ended', () => {
       this.currentTime = 0;
       this.play();
@@ -75,6 +85,7 @@ class Clock extends Component {
     clearInterval(this.timerID);
     clearInterval(this.countDown);
   }
+
   selectTimer = (e) => {
     let { value } = e.target;
     let showTimer = `${value < 10 ? ('0' + value) : value}:00`;
@@ -90,24 +101,26 @@ class Clock extends Component {
 
   }
   startTimer = () => {
+    // this.endAudio.pause();
     // disable the button after start timer
-    // this.isStart = true;
-    this.setState({ isStart: true });
-    this.audio.play();
+    this.setState({ isStart: true, });
     this.countDown = setInterval(() => this.down(), 1000);
+    this.audio.play();
   }
+
   stopTimer = () => {
     clearInterval(this.countDown);
     this.audio.pause();
 
     this.setState({ isStop: true, isStart: false, play: false });
   }
+
   resetTimer = () => {
     clearInterval(this.countDown);
     this.audio.pause();
     this.audio = new Audio(sound);
 
-    this.setState({ showTimer: '00:00', isSelect: false, isStart: false, counterTimer: 0, play: false });
+    this.setState({ showTimer: '00:00', isSelect: false, isStart: false, isStop: false, counterTimer: 0, play: false });
   }
   render() {
     return (
@@ -116,7 +129,7 @@ class Clock extends Component {
         {/* <h2>It is {this.state.date.toLocaleTimeString()}    now</h2> */}
         {/* <h2> Timer Break</h2> */}
         {/* </Border> */}
-        <h1>Choose time:</h1>
+        <h1 className="choose">Choose time:</h1>
         <ChooseTimer time={25} selectTimer={this.selectTimer} />
         <ChooseTimer time={20} selectTimer={this.selectTimer} />
         <ChooseTimer time={15} selectTimer={this.selectTimer} />
